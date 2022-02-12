@@ -67,13 +67,68 @@ df_lst = [pd.DataFrame(np.asarray(theta_hat[i]).reshape(-1,4,),
                    columns=['a1', 'a2', 'b0', 'b1']) for i in range(len(u_t))]
 
 #%%
-mpl.plot(t, df_lst[2]['a1'])
-mpl.plot(t, [a1 for i in range(sample_depth)])
+# mpl.plot(t, df_lst[2]['a1'])
 
-mpl.plot(t, df_lst[2]['a2'])
 
-mpl.plot(t, df_lst[2]['b0'])
+# f, (ax1, ax2, ax3, ax4) = mpl.subplots(4, 1, sharey=True)
+# ax1.plot(t, df_lst[2]['a1'])
+# ax1.axhline(y=a1, color='black', linestyle='--')
 
-mpl.plot(t, df_lst[2]['b1'])
-        
+# ax2.plot(t, df_lst[2]['a2'])
+# ax2.axhline(y=a2, color='black', linestyle='--')
+
+# ax3.plot(t, df_lst[2]['b0'])
+# ax3.axhline(y=b0, color='black', linestyle='--')
+
+# ax4.plot(t, df_lst[2]['b1'])
+# ax4.axhline(y=b1, color='black', linestyle='--')
+
+
+
+# mpl.plot(t, df_lst[2]['a2'])
+
+# mpl.plot(t, df_lst[2]['b0'])
+
+# mpl.plot(t, df_lst[2]['b1'])
+
+
+
+# import seaborn as sns
+# sns.set()
+
+# fig, ((ax1, ax2), (ax3, ax4)) = mpl.subplots(2, 2, sharey=True, squeeze=False)
+# fig.suptitle('Parameter Extimates for multi-frequency sinusoidial exitation ')
+# fig.tight_layout(pad=2)
+
+# ax1.plot(t, df_lst[2]['a1'], label='a1_hat')
+# ax1.axhline(y=a1, color='black', linestyle='--', label='a1')
+# ax1.legend()
+# ax1.set_title('a1')
+
+# ax2.plot(t, df_lst[2]['a2'], label='a2_hat')
+# ax2.axhline(y=a2, color='black', linestyle='--', label='a2')
+# ax2.legend()
+# ax2.set_title('a2')
+
+# ax3.plot(t, df_lst[2]['b0'], label='b0_hat')
+# ax3.axhline(y=b0, color='black', linestyle='--', label='b0')
+# ax3.legend()
+# ax3.set_title('b0')
+
+# ax4.plot(t, df_lst[2]['b1'], label='b1_hat')
+# ax4.axhline(y=b1, color='black', linestyle='--', label='b1')
+# ax4.legend()
+# ax4.set_title('b1')
+
+import matplotlib.pyplot as mpl
+import seaborn as sns
+line_width = 0.8
+graph = sns.lineplot(data=df_lst[2], dashes=False)
+# graph.despine(left=True)
+graph.axhline(y=a1, color='black', linestyle='--', linewidth=line_width, label='a1')
+graph.axhline(y=a2, color='black', linestyle='--', linewidth=line_width, label='a2')
+graph.axhline(y=b0, color='black', linestyle='--', linewidth=line_width, label='b0')
+graph.axhline(y=b1, color='black', linestyle='--', linewidth=line_width, label='b1')
+
+mpl.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0, labels=df_lst[2].columns)
 
