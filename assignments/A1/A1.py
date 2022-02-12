@@ -5,6 +5,7 @@ Created on Thu Feb 10 21:05:47 2022
 @author: clive
 """
 import numpy as np
+import pandas as pd
 import scipy as spy
 from numpy.linalg import inv
 from scipy.signal import unit_impulse 
@@ -37,19 +38,21 @@ theta_hat = [[theta_hat0], [theta_hat0]]
 #%%
 
 for j in [0, 1]:
-    for i in range(1,sample_depth+1):
+    for i in range(1,sample_depth):
         if (i == 1): # accounts for the lack of t-2 data on first iteration
             phi = np.array([-y[j][i-1], 0, u_t[j][i-1], 0])
         else:
             phi = np.array([-y[j][i-1], -y[j][i-2], u_t[j][i-1], u_t[j][i-2]])
             
-        phi = np.asarray(phi).reshape(-1,1)
+        phi = np.asarray(phi).reshape(-1,1) # changes phi's dimensions from (4,) to [4,1] enabling transpose operations
         y[j].append(np.reshape(phi.T@theta0 + np.random.normal(0, sigma), ()))
         p = inv(inv(p) + phi*phi.T)
         k = p@phi
         theta_hat[j].append(theta_hat[j][i-1] + k*(y[j][i] - phi.T@theta_hat[j][i-1]))
 
+df_lst = [pd.DataFrame(np.asarray(theta_hat[i]).reshape(-1,4,), 
+                   columns=['a1', 'a2', 'b0', 'b1']) for i in range(len(u_t))]
 t = [i for i in range(sample_depth+1)]
-mpl.plot(t, theta_hat[0][:])
+mpl.plot(t, theta_hat[0])
         
 
