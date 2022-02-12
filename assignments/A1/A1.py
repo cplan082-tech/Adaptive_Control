@@ -52,7 +52,9 @@ for j in [0, 1]:
 
 df_lst = [pd.DataFrame(np.asarray(theta_hat[i]).reshape(-1,4,), 
                    columns=['a1', 'a2', 'b0', 'b1']) for i in range(len(u_t))]
-t = [i for i in range(sample_depth+1)]
-mpl.plot(t, theta_hat[0])
+
+#%%
+t = [i for i in range(sample_depth)]
+mpl.plot(t, df_lst[0]['a1'])
         
 
