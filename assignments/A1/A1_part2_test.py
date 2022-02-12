@@ -7,13 +7,14 @@ Created on Thu Feb 10 21:34:43 2022
 import pandas as pd
 import numpy as np
 import scipy as spy
+from math import cos, sin, pi
 from numpy.linalg import inv
 from scipy.signal import unit_impulse 
 import matplotlib.pyplot as mpl
 
 
-# df = pd.read_csv('noise_set.csv')
-# noise = df['0']
+df = pd.read_csv('noise_set.csv')
+noise = df['0']
 
 sample_depth = 400
 
@@ -26,11 +27,12 @@ theta0 = np.array([a1, a2, b0, b1])
 p =100*np.identity(4) # starting P matrix
 
 sigma = 0.65
-# y = [np.array([noise[0]])]# first elements in y vector
-y = [np.random.normal(0, sigma)]
+y = [np.array(noise[0])]# first elements in y vector
+# y = [np.random.normal(0, sigma)]
 
-
-u_t = unit_impulse(sample_depth, 100) # Creating impulse delta(t - 100)
+t = [i for i in range(sample_depth)]
+# u_t = unit_impulse(sample_depth, 100) # Creating impulse delta(t - 100)
+u_t = np.array([sin(2*pi*t[i]/5) + cos(4*pi*t[i]/5) for i in t])
 
 
 theta_hat = [np.reshape(np.array([0]*4), (-1,1))]
@@ -45,7 +47,7 @@ for i in range(1,sample_depth):
         phi = np.array([-y[i-1], -y[i-2], u_t[i-1], u_t[i-2]])
         
     phi = np.asarray(phi).reshape(-1,1)
-    y.append(np.reshape(phi.T@theta0 + np.random.normal(0, sigma), ())) # why did I have to reshape here!?!?!??!
+    y.append(np.reshape(phi.T@theta0 + np.array(noise[i]), ())) # why did I have to reshape here!?!?!??!
     p = inv(inv(p) + phi*phi.T)
     k = p@phi
     theta_hat.append(theta_hat[i-1] + k*(y[i] - phi.T@theta_hat[i-1]))
