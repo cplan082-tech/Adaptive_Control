@@ -6,6 +6,7 @@ Created on Thu Feb 10 21:05:47 2022
 """
 import numpy as np
 import pandas as pd
+from math import cos, sin, pi
 import scipy as spy
 from numpy.linalg import inv
 from scipy.signal import unit_impulse 
@@ -24,14 +25,14 @@ p =100*np.identity(4) # starting P matrix
 sigma = 0.65
 y0 = np.random.normal(0, sigma)
 y = [[y0],[y0]] # first elements in y vector
-# y = [[np.random.normal(0, sigma)],[np.random.normal(0, sigma)]]
 
+t = [i for i in range(sample_depth)]
 u_t1 = unit_impulse(sample_depth, 100) # Creating impulse delta(t - 100)
 u_t2 = np.zeros(sample_depth) # Creating unit step unit(t - 100)
 u_t2[np.where(np.arange(0,sample_depth) >= 100)] = 1
+u_t3 = np.array([sin(2*pi*t[i]/5) + cos(4*pi*t[i]/5) for i in t])
 u_t = np.stack([u_t1, u_t2]) # impulse = u_t[0], step = u_t[1]
 
-# theta_hat0 = np.reshape(np.array([0]*4), (-1,1))
 theta_hat0 = np.reshape(np.array([0]*4), (-1,1))
 theta_hat = [[theta_hat0], [theta_hat0]]
 
@@ -54,7 +55,6 @@ df_lst = [pd.DataFrame(np.asarray(theta_hat[i]).reshape(-1,4,),
                    columns=['a1', 'a2', 'b0', 'b1']) for i in range(len(u_t))]
 
 #%%
-t = [i for i in range(sample_depth)]
 mpl.plot(t, df_lst[0]['a1'])
         
 
