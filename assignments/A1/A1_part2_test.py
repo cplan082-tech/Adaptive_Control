@@ -35,7 +35,7 @@ u_t = unit_impulse(sample_depth, 100) # Creating impulse delta(t - 100)
 
 theta_hat = [np.reshape(np.array([0]*4), (-1,1))]
 
-
+#%%
 
 for i in range(1,sample_depth):
     # print(i)
@@ -45,8 +45,7 @@ for i in range(1,sample_depth):
         phi = np.array([-y[i-1], -y[i-2], u_t[i-1], u_t[i-2]])
         
     phi = np.asarray(phi).reshape(-1,1)
-    y_temp = np.reshape(phi.T@theta0 + np.random.normal(0, sigma), ()) # why did I have to reshape here!?!?!??!
-    y.append(y_temp)
+    y.append(np.reshape(phi.T@theta0 + np.random.normal(0, sigma), ())) # why did I have to reshape here!?!?!??!
     p = inv(inv(p) + phi*phi.T)
     k = p@phi
     theta_hat.append(theta_hat[i-1] + k*(y[i] - phi.T@theta_hat[i-1]))
