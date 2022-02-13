@@ -17,7 +17,7 @@ import matplotlib.pyplot as mpl
 # noise = df['0']
 # testing ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-sample_depth = 400
+sample_depth = 3000
 
 a1 = 1.3
 a2 = 0.75
@@ -68,29 +68,6 @@ df_lst = [pd.DataFrame(np.asarray(theta_hat[i]).reshape(-1,4,),
 
 #%%
 # mpl.plot(t, df_lst[2]['a1'])
-
-
-# f, (ax1, ax2, ax3, ax4) = mpl.subplots(4, 1, sharey=True)
-# ax1.plot(t, df_lst[2]['a1'])
-# ax1.axhline(y=a1, color='black', linestyle='--')
-
-# ax2.plot(t, df_lst[2]['a2'])
-# ax2.axhline(y=a2, color='black', linestyle='--')
-
-# ax3.plot(t, df_lst[2]['b0'])
-# ax3.axhline(y=b0, color='black', linestyle='--')
-
-# ax4.plot(t, df_lst[2]['b1'])
-# ax4.axhline(y=b1, color='black', linestyle='--')
-
-
-
-# mpl.plot(t, df_lst[2]['a2'])
-
-# mpl.plot(t, df_lst[2]['b0'])
-
-# mpl.plot(t, df_lst[2]['b1'])
-
 
 
 # import seaborn as sns
